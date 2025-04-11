@@ -6,9 +6,3 @@ docker run --name livrariadb -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e PO
 
 #RODAR PGADMIN4
 docker run --name pgadmin4 -d -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network livraria-network dpage/pgadmin4
-
-#CHECAGEM DE TODAS AS PORTAS
-netstat -aof
-
-#CHECAGEM DE PORTA ESPECÍFICA (A 5432)
-netstat -aof | findstr 5432
