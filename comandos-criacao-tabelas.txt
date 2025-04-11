@@ -1,0 +1,28 @@
+CREATE TABLE Autor(
+	id uuid not null,
+	nome varchar(100) not null,
+	data_nascimento date,
+	nacionalidade varchar(50),
+
+	CONSTRAINT pk_Autor PRIMARY KEY(id)
+);
+
+SELECT * FROM Autor
+
+CREATE TABLE Livro(
+	id uuid not null,
+	isbn varchar(20) not null,
+	titulo varchar(150) not null,
+	data_publicacao date,
+	genero varchar(30) not null,
+	preco numeric(5,2) not null,
+	id_autor uuid not null,
+
+	CONSTRAINT pk_Livro PRIMARY KEY(id),
+	CONSTRAINT un_Livro_isbn UNIQUE(isbn),
+	CONSTRAINT fk_Livro_Id_Autor FOREIGN KEY (id_autor) REFERENCES Autor,
+	CONSTRAINT ck_Livro_Genero CHECK(genero IN('FICCAO','FANTASIA','MISTERIO','ROMANCE','BIOGRAFIA','CIENCIA')),
+	CONSTRAINT ck_Livro_Preco CHECK(preco > 0)
+);
+
+SELECT * FROM Livro
