@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: livraria-api
+  datasource:
+    url: jdbc::postgres://localhost:5432/livraria
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
