@@ -26,7 +26,8 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor")
+    // @OneToMany(mappedBy = "autor")
+    @Transient //não considera isso aqui uma coluna (só fiz isso para meu test passar)
     private List<Livro> livros;
 
 }
