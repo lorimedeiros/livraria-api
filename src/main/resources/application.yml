@@ -10,6 +10,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-      #update: cria o banco e quando derrubar a aplicação o banco continua lá, fora que também persiste em caso de alterações
-      #none: padrão (não faz nada)
-      #create-drop: quando subir a aplicação cria tudo, mas quando derrubar ele irá dropar (é um banco por sessão) ideal para testes
