@@ -6,6 +6,7 @@ import io.github.lorimedeiros.livraria_api.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -108,6 +109,19 @@ class AutorRepositoryTest {
 
         repository.save(autor);
         livroRepository.saveAll(autor.getLivros()); //salva toda a lista de uma vez
+    }
+
+    @Test
+    void listarLivrosAutor(){
+        var id = UUID.fromString("7c51f0cd-1ff3-4c43-b5ce-fe07e3e9020d");
+        var autor = repository.findById(id).get();
+
+        //buscar os livros do autor
+        List<Livro> livroList = livroRepository.findByAutor(autor);
+        autor.setLivros(livroList);
+        //carregando apropriadamente os livros do autor (funciona com eager)
+
+        autor.getLivros().forEach(System.out::println);
     }
 
 }

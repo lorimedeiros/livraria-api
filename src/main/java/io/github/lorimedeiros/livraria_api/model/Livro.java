@@ -2,6 +2,7 @@ package io.github.lorimedeiros.livraria_api.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "Livro")
 @Data
+@ToString(exclude = "autor") //exclui o autor do tostring (pro meu teste passar)
 public class Livro {
 
     @Id
