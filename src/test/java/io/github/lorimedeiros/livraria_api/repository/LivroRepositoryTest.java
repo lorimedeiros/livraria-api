@@ -20,6 +20,7 @@ class LivroRepositoryTest {
     @Autowired
     AutorRepository autorRepository;
 
+    //para salvar a entidade livro (que tem relação com o autor, antes preciso salvar um autor)
     @Test
     public void salvarTest(){
         Livro livro = new Livro();
@@ -34,5 +35,7 @@ class LivroRepositoryTest {
 
         repository.save(livro);
     }
+
+
 
 }
