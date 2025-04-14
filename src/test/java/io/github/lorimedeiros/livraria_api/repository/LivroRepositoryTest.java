@@ -22,7 +22,7 @@ class LivroRepositoryTest {
 
     //salvando sem cascade
     @Test
-    void salvarTest(){
+    public void salvarTest(){
         Livro livro = new Livro();
         livro.setIsbn("98887-65474");
         livro.setPreco(BigDecimal.valueOf(100));
@@ -39,7 +39,7 @@ class LivroRepositoryTest {
     //com cascade; salva só o livro mas traz o autor junto, salva ambos, sem precisar usar repository de autor
     //isso se chama operação de persistencia
     @Test
-    void salvarCascadeTest(){
+    public void salvarCascadeTest(){
         Livro livro = new Livro();
         livro.setIsbn("98887-65474");
         livro.setPreco(BigDecimal.valueOf(100));
@@ -55,42 +55,6 @@ class LivroRepositoryTest {
         livro.setAutor(autor);
 
         repository.save(livro);
-    }
-
-    //MAAAAS... Cascade é perigoso em produção (profissional)
-    //então essa seria a forma ideal (e segura), salvando manualmente
-    @Test
-    void salvarLivroCriandoAutorTest(){
-        Livro livro = new Livro();
-        livro.setIsbn("98887-65554");
-        livro.setPreco(BigDecimal.valueOf(200));
-        livro.setGenero(GeneroLivro.FICCAO);
-        livro.setTitulo("Mais Outro Livro");
-        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
-
-        Autor autor = new Autor();
-        autor.setNome("Leo");
-        autor.setNacionalidade("Brasileiro");
-        autor.setDataNascimento(LocalDate.of(1950, 1, 15));
-
-        autorRepository.save(autor);
-
-        livro.setAutor(autor);
-
-        repository.save(livro);
-    }
-
-    @Test
-    void atualizarAutorDoLivro(){
-        UUID id = UUID.fromString("285eb055-fa52-43a1-8dac-520616c1659a");
-        var livroParaAtualizar = repository.findById(id).orElse(null);
-
-        UUID idAutor = UUID.fromString("eb492333-9ab4-4b27-b9ca-94ba6435af12");
-        Autor autorNovo = autorRepository.findById(idAutor).orElse(null);
-
-        livroParaAtualizar.setAutor(autorNovo);
-
-        repository.save(livroParaAtualizar);
     }
 
 }
