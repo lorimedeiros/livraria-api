@@ -6,6 +6,7 @@ import io.github.lorimedeiros.livraria_api.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -90,6 +91,35 @@ class LivroRepositoryTest {
 
         livroParaAtualizarAutor.setAutor(autorNovo);
         repository.save(livroParaAtualizarAutor);
+    }
+
+    //é um getbyid padrãozão, mas tem um detalhe. Ele carrega o autor para retornar livro, isso deixa a aplicação pesada
+    //a solução está dentro da classe Livro
+    @Test
+    void buscarLivroTest(){
+        UUID idLivro = UUID.fromString("bdccf169-ab72-478c-ad61-ebc35994330f");
+        Livro livro = repository.findById(idLivro).orElse(null);
+
+        System.out.println("Livro:");
+        System.out.println(livro.getTitulo());
+
+        System.out.println("Autor:");
+        System.out.println(livro.getAutor().getNome());
+    }
+
+    //mas e se quisermos trazer dados do Autor mesmo usando lazy?
+    //simples, usamos @Transactional, garantindo uma aplicação mais veloz
+    @Test
+    @Transactional
+    void buscarLivroTransactionalTest(){
+        UUID idLivro = UUID.fromString("bdccf169-ab72-478c-ad61-ebc35994330f");
+        Livro livro = repository.findById(idLivro).orElse(null);
+
+        System.out.println("Livro:");
+        System.out.println(livro.getTitulo());
+
+        System.out.println("Autor:");
+        System.out.println(livro.getAutor().getNome());
     }
 
 }

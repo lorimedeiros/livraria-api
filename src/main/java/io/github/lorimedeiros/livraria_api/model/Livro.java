@@ -33,7 +33,10 @@ public class Livro {
     @Column(name = "preco", precision = 5, scale = 2, nullable = false)
     private BigDecimal preco;
 
-    @ManyToOne
+    //fetch = FetchType.EAGER : PADRÃO quando não especificamos; traz junto o objeto da relação
+    //fetch = FetchType.LAZY  : não traz o obj da relação, tornando a operação mais leve
+    //ou seja, se eu pedir qualquer informação de autor pelo livro, irá dar erro, pois não carrega autor
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_autor")
     private Autor autor;
 
