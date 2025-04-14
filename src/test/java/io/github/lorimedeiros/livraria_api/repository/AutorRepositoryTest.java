@@ -1,11 +1,15 @@
 package io.github.lorimedeiros.livraria_api.repository;
 
 import io.github.lorimedeiros.livraria_api.model.Autor;
+import io.github.lorimedeiros.livraria_api.model.GeneroLivro;
+import io.github.lorimedeiros.livraria_api.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +19,9 @@ class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     void salvarTest(){
@@ -70,6 +77,37 @@ class AutorRepositoryTest {
             Autor autorEncontrado = possivelAutor.get();
             repository.delete(autorEncontrado);
         }
+    }
+
+    @Test
+    void salvarAutorComLivrosTest(){
+        Autor autor = new Autor();
+        autor.setNome("Joana");
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1990, 3, 17));
+
+        Livro livro = new Livro();
+        livro.setIsbn("28587-95554");
+        livro.setPreco(BigDecimal.valueOf(90));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("Assassinato no Trem");
+        livro.setDataPublicacao(LocalDate.of(2020, 1, 2));
+        livro.setAutor(autor);
+
+        Livro livro2 = new Livro();
+        livro2.setIsbn("36547-95554");
+        livro2.setPreco(BigDecimal.valueOf(90));
+        livro2.setGenero(GeneroLivro.MISTERIO);
+        livro2.setTitulo("Roubo da Cassa 584");
+        livro2.setDataPublicacao(LocalDate.of(2022, 1, 2));
+        livro2.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+        autor.getLivros().add(livro2);
+
+        repository.save(autor);
+        livroRepository.saveAll(autor.getLivros()); //salva toda a lista de uma vez
     }
 
 }
