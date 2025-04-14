@@ -17,7 +17,7 @@ class AutorRepositoryTest {
     AutorRepository repository;
 
     @Test
-    public void salvarTest(){
+    void salvarTest(){
         Autor autor = new Autor();
         autor.setNome("José");
         autor.setNacionalidade("Brasileiro");
@@ -28,7 +28,7 @@ class AutorRepositoryTest {
     }
 
     @Test
-    public void atualizarTest(){
+    void atualizarTest(){
         var id = UUID.fromString("fd522650-7e1c-41c3-b700-f6978391d409"); //é o id que peguei no banco do autor gerado pelo test de salvar
 
         Optional<Autor> possivelAutor = repository.findById(id);
@@ -44,24 +44,24 @@ class AutorRepositoryTest {
     }
 
     @Test
-    public void listarTest(){
+    void listarTest(){
         List<Autor> lista = repository.findAll();
         lista.forEach(System.out::println);
     }
 
     @Test
-    public void countTest(){
+    void countTest(){
         System.out.println("Contagem de Autores: " + repository.count());
     }
 
     @Test
-    public void deletePorIdTest(){
+    void deletePorIdTest(){
         var id = UUID.fromString("fd522650-7e1c-41c3-b700-f6978391d409");
         repository.deleteById(id);
     }
 
     @Test
-    public void deleteTest(){
+    void deleteTest(){
         var id = UUID.fromString("c6446412-ed60-40c3-9261-9b4b7e4fd79d");
 
         Optional<Autor> possivelAutor = repository.findById(id);
