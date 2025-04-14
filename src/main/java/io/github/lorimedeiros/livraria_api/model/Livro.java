@@ -33,10 +33,8 @@ public class Livro {
     @Column(name = "preco", precision = 5, scale = 2, nullable = false)
     private BigDecimal preco;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_autor")
     private Autor autor;
-    //cascade = CascadeType.REMOVE : se deletar o livro vai deletar o autor junto
-    //cascade = CascadeType.ALL : qualquer operação que realizar no livro vai trazer o autor junto
 
 }

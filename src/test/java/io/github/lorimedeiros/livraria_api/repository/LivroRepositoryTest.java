@@ -57,4 +57,27 @@ class LivroRepositoryTest {
         repository.save(livro);
     }
 
+    //MAAAAS... Cascade é perigoso em produção (profissional)
+    //então essa seria a forma ideal e segura, salvando manualmente
+    @Test
+    public void salvarLivroCriandoAutorTest(){
+        Livro livro = new Livro();
+        livro.setIsbn("98887-65554");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setGenero(GeneroLivro.FICCAO);
+        livro.setTitulo("Outro Livro");
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
+
+        Autor autor = new Autor();
+        autor.setNome("Leo");
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1950, 1, 15));
+
+        autorRepository.save(autor);
+
+        livro.setAutor(autor);
+
+        repository.save(livro);
+    }
+
 }
