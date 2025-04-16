@@ -1,9 +1,11 @@
 package io.github.lorimedeiros.livraria_api.repository;
 
 import io.github.lorimedeiros.livraria_api.model.Autor;
+import io.github.lorimedeiros.livraria_api.model.GeneroLivro;
 import io.github.lorimedeiros.livraria_api.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -57,5 +59,15 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
             order by l.genero
             """)
     List<String> listarGeneroAutoresBrasileiros(); //para fazer quarrys maiores é só usar quebra de linha para manter a elegancia
+
+    //parâmetros em pesquisas @query
+    //o que vem depois do : é o que colocamos no @Param para relacionar
+    @Query("select l from Livro l where l.genero = :nomeParametro order by :parametroOrdenacao")
+    List<Livro> findByGenero(@Param("nomeParametro") GeneroLivro generoLivro,
+                             @Param("parametroOrdenacao") String propriedade);
+
+    //sem @Param mas com posição
+    @Query("select l from Livro l where l.genero = ?1 order by ?2")
+    List<Livro> findByGeneroPositionalParameters(GeneroLivro generoLivro, String propriedade);
 
 }
