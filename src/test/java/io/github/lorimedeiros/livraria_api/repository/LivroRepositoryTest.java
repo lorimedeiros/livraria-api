@@ -171,4 +171,14 @@ class LivroRepositoryTest {
         resultado.forEach(System.out::println);
     }
 
+    @Test
+    void deletePorGenero(){
+        repository.deleteByGenero(GeneroLivro.MISTERIO);
+    }
+
+    @Test
+    void updateDataPublicacao(){
+        repository.updateDataPublicacao(LocalDate.of(2000, 1, 1));
+    }
+
 }

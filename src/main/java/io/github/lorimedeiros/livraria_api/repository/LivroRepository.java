@@ -4,8 +4,10 @@ import io.github.lorimedeiros.livraria_api.model.Autor;
 import io.github.lorimedeiros.livraria_api.model.GeneroLivro;
 import io.github.lorimedeiros.livraria_api.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -69,5 +71,17 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     //sem @Param mas com posição
     @Query("select l from Livro l where l.genero = ?1 order by ?2")
     List<Livro> findByGeneroPositionalParameters(GeneroLivro generoLivro, String propriedade);
+
+
+    //NUNCA faça update ou delete sem WHERE isso aqui foi um teste e, sim, alterou tudo no update
+    @Modifying //operações de escrita precisam de @Modifying e abrir transação
+    @Transactional
+    @Query("delete from Livro where genero = ?1")
+    void deleteByGenero(GeneroLivro generoLivro);
+
+    @Modifying
+    @Transactional
+    @Query("update Livro set dataPublicacao = ?1")
+    void updateDataPublicacao(LocalDate novaData);
 
 }
