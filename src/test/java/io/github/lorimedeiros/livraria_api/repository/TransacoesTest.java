@@ -44,5 +44,9 @@ public class TransacoesTest {
         //se tudo ocorrer como esperado, ocorrerá commit
         //ou tudo, ou nada
     }
-
+    //OBS: @Transactional só funciona em métodos public
+    //OBS: sempre usado nas camadas de serviços, nunca no controller
+    //OBS: quando é aberta uma janela de transação (quando é usado o @Transactional no método),
+    //     os dados podem ser salvos/arualizados sem a necessidade de um repository.save(),
+    //     apenas com o uso do set da entidade
 }
